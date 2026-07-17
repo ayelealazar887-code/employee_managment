@@ -8,11 +8,11 @@ function Sidebar() {
     const [userName, setUserName] = useState('');
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    const role = 'Employee';
+    const role = 'ADMIN' || 'EMPLOYEE';
 
     const navItems = [
         { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-        role === 'Admin'
+        role === 'ADMIN'
             ? { name: 'Employees', href: '/employees', icon: Users }
             : { name: 'Attendance', href: '/attendance', icon: CalendarDays },
         { name: 'Leave', href: '/leave', icon: FileText },
