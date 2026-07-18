@@ -11,7 +11,7 @@ function AttendanceHistory({ history }) {
       <div className="overflow-x-auto">
         <table className="table-modern w-full">
           <thead>
-            <tr>
+            <tr> 
               <th>Date</th>
               <th>Check In</th>
               <th>Check Out</th>
