@@ -45,7 +45,7 @@ function Sidebar() {
         <div className="sidebar-shell">
             <div className="sidebar-brand">
                 <div className="sidebar-brand-badge rounded-3xl bg-white text-lg font-semibold text-slate-700">
-                    {initials || <User size={20} />}
+                    <User size={20} />
                 </div>
                 <div className="min-w-0">
                     <p className="truncate text-sm font-semibold text-slate-700">{displayName}</p>
