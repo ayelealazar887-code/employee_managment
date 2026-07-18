@@ -89,26 +89,41 @@
 
     /* Sidebar styles */
     .sidebar-shell {
-        @apply flex h-full w-full flex-col bg-gradient-to-b from-orange-700 via-orange-600 to-orange-500 backdrop-blur-xl border-r border-orange-500/80;
-        color: #ffffff;
+        @apply flex h-full w-full flex-col border-r bg-white backdrop-blur-xl shadow-[12px_0_30px_-20px_rgba(15,23,42,0.12)];
+        border-color: #E5E7EB;
+        color: #374151;
     }
     .sidebar-brand {
-        @apply flex items-center gap-3 border-b border-orange-400/80 bg-gradient-to-r from-orange-700 via-orange-600 to-orange-500 px-5 py-5 text-white;
+        @apply flex items-center gap-3 border-b bg-white px-5 py-5;
+        border-color: #E5E7EB;
+        color: #374151;
     }
     .sidebar-brand-badge {
-        @apply flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-md shadow-orange-500/25;
+        @apply flex h-10 w-10 items-center justify-center rounded-xl shadow-sm;
+        background-color: #FFFFFF;
+        color: #374151;
     }
     .sidebar-user-card {
-        @apply rounded-2xl border border-orange-400/70 bg-orange-600/95 p-3 text-white;
+        @apply rounded-2xl border p-3;
+        border-color: #E5E7EB;
+        background-color: #FFFFFF;
+        color: #374151;
     }
     .sidebar-user-card p {
-        @apply text-white;
+        color: #374151;
     }
     .sidebar-nav-link {
-        @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:bg-orange-500/90 hover:text-white;
+        @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200;
+        color: #374151;
+    }
+    .sidebar-nav-link:hover {
+        background-color: #F9FAFB;
+        color: #374151;
     }
     .sidebar-nav-link.active {
-        @apply bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-lg;
+        @apply shadow-sm;
+        background-color: #EFF6FF;
+        color: #2563EB;
     }
 }
 
@@ -148,5 +163,6 @@
 
 /* Selection */
 ::selection {
-    @apply bg-orange-100 text-orange-900;
+    background-color: #EFF6FF;
+    color: #2563EB;
 }

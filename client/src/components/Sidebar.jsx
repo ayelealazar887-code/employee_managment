@@ -44,15 +44,15 @@ function Sidebar() {
     const sidebarContent = (
         <div className="sidebar-shell">
             <div className="sidebar-brand">
-                <div className="sidebar-brand-badge rounded-3xl bg-gradient-to-br from-orange-500 to-orange-600 text-white text-lg font-semibold">
+                <div className="sidebar-brand-badge rounded-3xl bg-white text-lg font-semibold text-slate-700">
                     {initials || <User size={20} />}
                 </div>
                 <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">{displayName}</p>
-                    <p className="text-xs text-orange-100 truncate">{roleLabel}</p>
+                    <p className="truncate text-sm font-semibold text-slate-700">{displayName}</p>
+                    <p className="truncate text-xs text-slate-500">{roleLabel}</p>
                 </div>
                 <button
-                    className="ml-auto rounded-lg p-2 text-white/80 transition hover:bg-orange-500/20 hover:text-white md:hidden"
+                    className="ml-auto rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 md:hidden"
                     onClick={() => setMobileOpen(false)}
                     aria-label="Close sidebar"
                 >
@@ -63,9 +63,9 @@ function Sidebar() {
             <div className="flex-1 px-4 py-4">
                 {userName && (
                     <div className="sidebar-user-card">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-orange-100">Signed in as</p>
-                        <p className="mt-2 text-sm font-semibold text-white">{userName}</p>
-                        <p className="text-xs text-orange-100">{roleLabel}</p>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-500">Signed in as</p>
+                        <p className="mt-2 text-sm font-semibold text-slate-700">{userName}</p>
+                        <p className="text-xs text-slate-500">{roleLabel}</p>
                     </div>
                 )}
 
@@ -90,9 +90,9 @@ function Sidebar() {
                 </div>
             </div>
 
-            <div className="border-t border-orange-400/60 p-4">
+            <div className="border-t border-slate-200 p-4">
                 <button
-                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white transition hover:bg-orange-600 hover:text-white"
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
                     onClick={handleLogout}
                 >
                     <LogOut size={18} />
