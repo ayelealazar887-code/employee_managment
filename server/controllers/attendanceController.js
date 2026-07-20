@@ -1,4 +1,4 @@
-import Attendance from "../models/Attendance";
+import Attendance from "../models/Attendance.js";
 
 // clock in/out for employee
 // POST /API/ATTENDANCE
