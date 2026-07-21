@@ -13,7 +13,7 @@ const leaveApplicationSchema = new mongoose.Schema({
         required: true
     },
     startDate: {
-        tyep: Date,
+        type: Date,
         required: true
     },
     endDate: {
@@ -37,7 +37,7 @@ const leaveApplicationSchema = new mongoose.Schema({
 
 },{timestamps: true})
 
-const LeaveApplication = mongoodsez.models.LeaveApplication || 
+const LeaveApplication = mongoose.models.LeaveApplication || 
 mongoose.model("LeaveApplication", leaveApplicationSchema)
 
 export default LeaveApplication;

@@ -10,6 +10,7 @@ import profileRouter from "./routes/profileRoute.js";
 import attendanceRouter from "./routes/attendanceRoute.js";
 import leaveRouter from "./routes/leaveRouter.js";
 import payslipRouter from "./routes/payslipsRoute.js";
+import dashboardRouter from "./routes/dashboardRoute.js";
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use('/api/profile', profileRouter)
 app.use('/api/attendance', attendanceRouter)
 app.use('/api/leave', leaveRouter)
 app.use('/api/payslip', payslipRouter)
+app.use('/api/payslip', dashboardRouter)
 
 await connectDB()
 app.listen(port, ()=> console.log(`server running on port ${port}`))
