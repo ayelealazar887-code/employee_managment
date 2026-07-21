@@ -8,6 +8,8 @@ import authRouter from "./routes/authRoute.js";
 import employeesRouter from "./routes/employeeRoute.js";
 import profileRouter from "./routes/profileRoute.js";
 import attendanceRouter from "./routes/attendanceRoute.js";
+import leaveRouter from "./routes/leaveRouter.js";
+import payslipRouter from "./routes/payslipsRoute.js";
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
@@ -26,6 +28,8 @@ app.use("/api/auth", authRouter)
 app.use("/api/employee", employeesRouter)
 app.use('/api/profile', profileRouter)
 app.use('/api/attendance', attendanceRouter)
+app.use('/api/leave', leaveRouter)
+app.use('/api/payslip', payslipRouter)
 
 await connectDB()
 app.listen(port, ()=> console.log(`server running on port ${port}`))

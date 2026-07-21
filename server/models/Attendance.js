@@ -39,9 +39,10 @@ const attendanceSchema = new mongoose.Schema({
     enum: ["Full Day", "Three Quarter Day", "Half Day", "Short Day", null],
     default: null
   }
-});
+}, {timestamps: true});
 
 attendanceSchema.index({employeeId: 1, data: 1}, {unique: true})
+
 const Attendance = mongoose.models.Attendance || mongoose.model("Attendance",
     attendanceSchema)
 
