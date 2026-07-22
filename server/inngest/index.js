@@ -108,7 +108,7 @@ const attendanceReminderCron = inngest.createFunction(
   id: "attendance-reminder-cron",
   triggers: [
     {
-      cron: "0 0 3 * * *",
+      cron: "TZ=Africa/Addis_Ababa 0 6 * * *",
     },
   ],
 },
