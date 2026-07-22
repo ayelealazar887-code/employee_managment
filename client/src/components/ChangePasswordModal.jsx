@@ -1,5 +1,7 @@
+import { formatDate } from 'date-fns'
 import { Loader2, Lock, ShieldCheck, X } from 'lucide-react'
 import React, { useState } from 'react'
+import api from '../api/axios'
 
 function ChangePasswordModal({ open, onClose }) {
   const [loading, setLoading] = useState(false)
@@ -16,14 +18,51 @@ function ChangePasswordModal({ open, onClose }) {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  e.preventDefault();
 
-    setTimeout(() => {
-      setLoading(false)
-      setMessage({ type: 'success', text: 'Password updated successfully.' })
-    }, 600)
+  setLoading(true);
+  setMessage({ type: "", text: "" });
+
+  const { currentPassword, newPassword, confirmPassword } = formData;
+
+  if (newPassword !== confirmPassword) {
+    setMessage({
+      type: "error",
+      text: "New passwords do not match",
+    });
+    setLoading(false);
+    return;
   }
+
+  try {
+    const { data } = await api.post("/auth/change-password", {
+      currentPassword,
+      newPassword,
+    });
+
+    if (!data.success) {
+      throw new Error(data.error || "Failed");
+    }
+
+    setMessage({
+      type: "success",
+      text: "Password updated successfully",
+    });
+
+    setFormData({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+  } catch (error) {
+    setMessage({
+      type: "error",
+      text: error.response?.data?.error || error.message,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (!open) return null
 

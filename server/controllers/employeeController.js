@@ -8,26 +8,30 @@ export const getEmployees = async (req, res) => {
   try {
     const { department } = req.query;
     const where = {};
+
     if (department) where.department = department;
 
-    const employees = (await Employee.find(where))
-      .toSorted({
-        createdAt: -1,
-      })
+    const employees = await Employee.find(where)
+      .sort({ createdAt: -1 })
       .populate("userId", "email role")
       .lean();
-    const result = Employee.map((emp) => ({
+
+    const result = employees.map((emp) => ({
       ...emp,
       id: emp._id.toString(),
       user: emp.userId
-        ? { email: emp.userId.email, role: emp.userId.role }
+        ? {
+            email: emp.userId.email,
+            role: emp.userId.role,
+          }
         : null,
     }));
 
     return res.json(result);
   } catch (error) {
+    console.error("Get employees error:", error);
     return res.status(500).json({
-      error: "failed to fetch employees",
+      error: "Failed to fetch employees",
     });
   }
 };
@@ -55,7 +59,7 @@ export const createEmployees = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const hashed = await bcrypt.hash(password, 10);
+    const hashed = await bcrypt.hash(String(password), 10);
     const user = await User.create({
       email,
       password: hashed,

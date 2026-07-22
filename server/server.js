@@ -28,12 +28,12 @@ app.use(multer().none())
 // Route 
 app.get("/", (req, res)=> res.send("server running"))
 app.use("/api/auth", authRouter)
-app.use("/api/employee", employeesRouter)
+app.use("/api/employees", employeesRouter)
 app.use('/api/profile', profileRouter)
 app.use('/api/attendance', attendanceRouter)
 app.use('/api/leave', leaveRouter)
-app.use('/api/payslip', payslipRouter)
-app.use('/api/payslip', dashboardRouter)
+app.use('/api/payslips', payslipRouter)
+app.use('/api/dashboard', dashboardRouter)
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
