@@ -11,6 +11,8 @@ import attendanceRouter from "./routes/attendanceRoute.js";
 import leaveRouter from "./routes/leaveRouter.js";
 import payslipRouter from "./routes/payslipsRoute.js";
 import dashboardRouter from "./routes/dashboardRoute.js";
+import { serve } from "inngest/express";
+import { inngest, functions } from "./inngest/index.js"
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
@@ -32,6 +34,8 @@ app.use('/api/attendance', attendanceRouter)
 app.use('/api/leave', leaveRouter)
 app.use('/api/payslip', payslipRouter)
 app.use('/api/payslip', dashboardRouter)
+
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 await connectDB()
 app.listen(port, ()=> console.log(`server running on port ${port}`))

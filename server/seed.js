@@ -26,7 +26,7 @@ async function registerAdmin() {
 
         if(existingAdmin){
             console.log("User already exist as role", existingAdmin.role);
-            process.exit(1)
+            process.exit(0)
         }
 
         const hashedPassword = await bcrypt.hash(TemporaryPassword, 10)
