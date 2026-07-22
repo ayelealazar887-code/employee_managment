@@ -1,4 +1,3 @@
-import React from 'react'
 import mongoose from "mongoose";
 
 const attendanceSchema = new mongoose.Schema({
