@@ -1,5 +1,7 @@
 import { Loader2Icon, Plus, X } from "lucide-react";
 import React, { useState } from "react";
+import api from "../../api/axios";
+import toast from "react-hot-toast";
 
 function GeneratePayslipForm({ employees, onSuccess }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,12 +9,18 @@ function GeneratePayslipForm({ employees, onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setIsOpen(false);
-      onSuccess?.();
-    }, 600);
+    setLoading(true)
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries())
+    try {
+      await api.post('payslips',data)
+      setIsOpen(false)
+      onSuccess()
+    } catch (error) {
+      toast.error(error?.response?.data?.error || error?.message)
+    }finally{
+      setLoading(false)
+    }
   };
 
   if (!isOpen) {
@@ -29,7 +37,7 @@ function GeneratePayslipForm({ employees, onSuccess }) {
   }
 
   return (
-    <div className="card animate-fade-in p-6 shadow-sm">
+    <div className="card animate-fade-in overflow-visible p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">Generate Monthly Payslip</h3>
@@ -47,7 +55,10 @@ function GeneratePayslipForm({ employees, onSuccess }) {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="mb-2 block text-sm font-medium text-slate-700">Employee</label>
-          <select name="employeeId" required className="w-full">
+          <select name="employeeId" required className="w-full pr-10 appearance-none" defaultValue="">
+            <option value="" disabled>
+              Select an employee
+            </option>
             {employees.map((employee) => (
               <option value={employee.id} key={employee.id}>
                 {employee.firstName} {employee.lastName} ({employee.position})
@@ -59,7 +70,7 @@ function GeneratePayslipForm({ employees, onSuccess }) {
         <div className="grid gap-4 md:grid-cols-2">
           <div>
             <label className="mb-2 block text-sm font-medium text-slate-700">Month</label>
-            <select name="month" required className="w-full">
+            <select name="month" required className="w-full pr-10 appearance-none">
               {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
                 <option value={month} key={month}>
                   {month}

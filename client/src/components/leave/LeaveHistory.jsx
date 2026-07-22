@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Check, Loader2, X } from "lucide-react";
 import { format } from "date-fns";
+import api from "../../api/axios";
+import toast from "react-hot-toast";
 
-function LeaveHistory({ leaves, isAdmin }) {
+function LeaveHistory({ leaves, isAdmin, onUpdate }) {
   const [processing, setProcessing] = useState(null);
   const [history, setHistory] = useState([]);
 
@@ -10,14 +12,16 @@ function LeaveHistory({ leaves, isAdmin }) {
     setHistory(leaves || []);
   }, [leaves]);
 
-  const handleStatusUpdate = (id, status) => {
+  const handleStatusUpdate = async (id, status) => {
     setProcessing(id);
-    setTimeout(() => {
-      setHistory((prev) =>
-        prev.map((leave) => (leave.id === id ? { ...leave, status } : leave)),
-      );
-      setProcessing(null);
-    }, 400);
+    try {
+      await api.patch(`/leave/${id}`, {status})
+      onUpdate();
+    } catch (error) {
+      toast.error(error?.response?.data?.error || error?.message)
+    } finally {
+      setProcessing(null)
+    }
   };
 
   const getStatusBadgeClass = (status) => {

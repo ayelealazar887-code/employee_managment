@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { DEPARTMENTS } from "../assets/assets";
 import { Loader2Icon } from "lucide-react";
+import toast from "react-hot-toast";
+import api from "../api/axios";
 
 function EmployeeForm({ initailData, onSuccess, onCancel }) {
   const [loading, setLoading] = useState(false);
@@ -9,10 +11,29 @@ function EmployeeForm({ initailData, onSuccess, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+
+    const formData = new FormData(e.currentTarget)
+    if(isEditMode){
+      const pwd = formData.get("password")
+      if(!pwd) formData.delete("password")
+    }
+    
+    try {
+      const url = isEditMode ? `/employees/${initailData.id}` :
+      "/employees"
+
+      const method = isEditMode ? "put" : "post";
+      await api[method](url, formData)
+      onSuccess ? onSuccess() : Navigate("/employees")
+    } catch (error) {
+      toast.error(error.response?.data?.error || error.message);
+    } finally {
+      setTimeout(() => {
       setLoading(false);
       onSuccess?.();
     }, 600);
+    }
+     
   };
 
   return (
@@ -131,13 +152,12 @@ function EmployeeForm({ initailData, onSuccess, onCancel }) {
             <label className="mb-2 block text-sm font-medium text-slate-700">Work Email</label>
             <input type="email" name="email" required defaultValue={initailData?.email} />
           </div>
-          {!isEditMode && (
+          {!isEditMode ? (
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">Temporary Password</label>
               <input type="password" name="password" required />
             </div>
-          )}
-          {!isEditMode && (
+          ): (
             <div className="md:col-span-2">
               <label className="mb-2 block text-sm font-medium text-slate-700">Change Password (Optional)</label>
               <input type="password" name="password" placeholder="Leave blank to keep current" />

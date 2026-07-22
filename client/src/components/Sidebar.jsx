@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { dummyProfileData } from '../assets/assets';
-import { CalendarDays, ChevronRight, DollarSign, FileText, LayoutDashboard, LogOut, Menu, Settings, User, Users, X } from 'lucide-react';
+import { CalendarDays, ChevronRight, DollarSign, FileText, LayoutDashboard, Loader2, LogOut, Menu, Settings, User, Users, X } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import api from '../api/axios';
 
 function Sidebar() {
     const { pathname } = useLocation();
     const [userName, setUserName] = useState('');
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    const role = '' || 'EMPLOYEE';
+    const {user, loading, logout} = useAuth()
+
+    const role = user?.role;
     const initials = `${userName}`
         .split(" ")
         .map((part) => part[0])
@@ -27,7 +31,9 @@ function Sidebar() {
     ];
 
     useEffect(() => {
-        setUserName(`${dummyProfileData.firstName} ${dummyProfileData.lastName}`);
+        api.get("profile").then(({data})=>{
+            if(data.firstName) setUserName(`${data.firstName} ${data.lastName || ""}`.trim());
+        })
     }, []);
 
     useEffect(() => {
@@ -35,6 +41,7 @@ function Sidebar() {
     }, [pathname]);
 
     const handleLogout = () => {
+        logout()
         window.location.href = '/login';
     };
 
@@ -70,7 +77,15 @@ function Sidebar() {
                 )}
 
                 <div className="mt-6 space-y-1">
-                    {navItems.map((item) => {
+                    {loading ? (
+                        <div>
+                            <Loader2 />
+                            <span >Loadin...</span>
+                        </div>
+                    ) : (
+
+                    
+                    navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = pathname === item.href || pathname.startsWith(item.href);
 
@@ -86,7 +101,7 @@ function Sidebar() {
                                 {isActive && <ChevronRight size={16} className="ml-auto" />}
                             </Link>
                         );
-                    })}
+                    }))}
                 </div>
             </div>
 
